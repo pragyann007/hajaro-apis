@@ -5,6 +5,7 @@ from app.hajaro.schemas.user import UserRegister,UserLogin
 from fastapi import HTTPException
 from pwdlib import PasswordHash
 from app.exceptions import PasswordMismatchException,UserNotFoundException,EmailAlreadyExistsException
+from app.core.security import create_tokens
 
 
 password_hash = PasswordHash.recommended()
@@ -45,6 +46,19 @@ class AuthService:
         if not verify_password :
             raise PasswordMismatchException("Password didnt match")
         
-        return user_exists
+        a_payload = {
+            "sub":user_exists.id,
+            "businesses":user_exists.businesses,
+            "email":user.email
+
+        }
+
+        r_payload = {
+            "sub":user_exists.id,
+
+        }
+        tokens  = create_tokens(a_payload=a_payload,r_payload=r_payload)
+        
+        return {"tokens":tokens}
 
 

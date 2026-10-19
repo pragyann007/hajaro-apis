@@ -4,6 +4,12 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Hajaro Backend Infrastructure"
     API_V1_PREFIX: str = "/hajaro/api/v1"
     DATABASE_URL: str
+    ACCESS_TOKEN_TTL_MINUTES:str
+    ACCESS_TOKEN_SECRET_KEY:str
+    REFRESH_TOKEN_TTL_MINUTES:str
+    REFRESH_TOKEN_SECRET_KEY:str
+    JWT_ALGORITHM:str="HS256"
+    ENVIRONMENT:str="development"
 
     # Configuration for pydantic-settings to read from the root .env file
     model_config = SettingsConfigDict(
