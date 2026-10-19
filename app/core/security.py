@@ -1,6 +1,22 @@
 from datetime import datetime, timedelta, timezone
 import jwt
 from app.core.config import settings
+from pwdlib import PasswordHash
+
+
+password_hash = PasswordHash.recommended()
+
+
+def hash_password(text:str)->str:
+    hashed_password = password_hash.hash(text)
+
+    return hashed_password
+
+
+def verify_password(plain_text:str,hashed_text:str)->bool:
+    verify = password_hash.verify(plain_text,hashed_text)
+    return verify
+
 
 
 def create_token(payload: dict, token_type: str) -> str:
