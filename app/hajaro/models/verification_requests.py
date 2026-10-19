@@ -57,3 +57,5 @@ class VerificationRequests(Base):
     evidence_reference: Mapped[str | None] = mapped_column(Text, nullable=True)
     
     expiry_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), index=True, nullable=True)
+
+    business:Mapped["BusinessModel"]=relationship("BusinessModel",back_populates="verifications_requests")

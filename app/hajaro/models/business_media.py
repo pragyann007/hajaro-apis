@@ -31,5 +31,7 @@ class BusinessMedia(Base):
     is_cover:Mapped[bool]=mapped_column(Boolean,default=False)
     display_order:Mapped[int]=mapped_column(Integer,nullable=False)
 
+    business:Mapped["BusinessModel"]=relationship("BusinessModel",back_populates="business_medias")
+
 
 

@@ -17,3 +17,4 @@ class Reviews(Base):
     comment:Mapped[str|None]=mapped_column(Text,nullable=True)
     is_approved: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False, index=True)
     created_at:Mapped[datetime] = mapped_column(DateTime(timezone=True),server_default=func.now(),nullable=False)
+    business:Mapped["BusinessModel"]=relationship("BusinessModel",back_populates="business_reviews")

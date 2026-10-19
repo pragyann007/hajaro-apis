@@ -35,6 +35,7 @@ class CatalogItems(Base):
     is_published:Mapped[bool]=mapped_column(Boolean,default=True)
     created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    business:Mapped["BusinessModel"]=relationship("BusinessModel",back_populates="catalog_items")
 
 
 

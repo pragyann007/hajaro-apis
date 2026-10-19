@@ -17,6 +17,7 @@ class BusinessHours(Base):
     open_time:Mapped[time]=mapped_column(Time(timezone=True))
     close_time:Mapped[time]=mapped_column(Time(timezone=True))
     is_closed:Mapped[bool]=mapped_column(Boolean,default=False)
+    business:Mapped["BusinessModel"]=relationship("BusinessModel",back_populates="business_hours")
 
 
 
