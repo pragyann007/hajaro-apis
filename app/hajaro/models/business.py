@@ -35,7 +35,7 @@ class BusinessModel(Base):
     location_id:Mapped[int]=mapped_column(ForeignKey("hajaro.locations.id"),nullable=False)
     geographic_point = mapped_column(Geography(geometry_type="POINT",srid=4326),nullable=False)
 
-    publication_status:Mapped[PublicationStatus] = mapped_column(SQLEnum(PublicationStatus),default=PublicationStatus.pending_draft,nullable=False)
+    publication_status:Mapped[PublicationStatus] = mapped_column(SQLEnum(PublicationStatus),default=PublicationStatus.pending_review,nullable=False)
 
     created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
@@ -44,7 +44,7 @@ class BusinessModel(Base):
 
     owner = relationship("UsersModel",back_populates="businesses")
 
-    business_categories_links = relationship("BusinessCategories",back_populates="category",cascade="all delete-orphan")
+    business_categories_links = relationship("BusinessCategories",back_populates="category",cascade="all, delete-orphan")
     business_claims = relationship("BusinessClaims",back_populates="business",cascade="all")
 
     business_hours= relationship("BusinessHours",back_populates="business",cascade="all")

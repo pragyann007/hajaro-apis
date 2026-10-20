@@ -18,5 +18,5 @@ class CategoryModel(Base):
     parent_id:Mapped[int]=mapped_column(Integer,nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean,default=False, nullable=False)
 
-    business_categories_links = relationship("BusinessCategories",back_populates="category",cascade="all delete-orphan")
+    business_categories_links = relationship("BusinessCategories",back_populates="category",cascade="all, delete-orphan")
 
