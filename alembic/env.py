@@ -8,6 +8,13 @@ from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import create_async_engine
 
 # 1. Add project root to Python path so 'app' can be found
+# Add this filter function inside alembic/env.py
+def include_object(object, name, type_, reflected, compare_to):
+    # Ignore automatic geoalchemy spatial index generation duplicates
+    if type_ == "index" and name and name.startswith("idx_"):
+        if any(col.name == "geographic_point" for col in object.table.columns):
+            return False
+    return True
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # 2. Setup Alembic configuration and logging

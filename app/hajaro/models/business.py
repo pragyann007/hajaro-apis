@@ -40,21 +40,29 @@ class BusinessModel(Base):
     created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),server_default=func.now(),nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
     published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
-    location = relationship("LocationModel",back_populates="business")
+    location = relationship("Locations", back_populates="businesses")
 
-    owner = relationship("UsersModel",back_populates="businesses")
+    owner = relationship("UsersModel", back_populates="businesses")
 
-    business_categories_links = relationship("BusinessCategories",back_populates="category",cascade="all, delete-orphan")
-    business_claims = relationship("BusinessClaims",back_populates="business",cascade="all")
+    business_categories_links = relationship(
+        "BusinessCategories", back_populates="business", cascade="all, delete-orphan"
+    )
+    business_claims = relationship("BusinessClaims", back_populates="business", cascade="all")
 
-    business_hours= relationship("BusinessHours",back_populates="business",cascade="all")
+    business_hours = relationship("BusinessHours", back_populates="business", cascade="all")
 
-    business_medias= relationship("BusinessMedia",back_populates="business",cascade="all")
-    business_submissions=relationship("BusinessSubmissions",back_populates="business",cascade="all")
+    business_medias = relationship("BusinessMedia", back_populates="business", cascade="all")
+    business_submissions = relationship(
+        "BusinessSubmissions", back_populates="business", cascade="all"
+    )
 
-    business_verifications=relationship("BusinessVerifications",back_populates="business",cascade="all")
-    catalog_items=relationship("CatalogItems",back_populates="business",cascade="all")
-    business_offers=relationship("Offers",back_populates="business",cascade="all")
+    business_verifications = relationship(
+        "BusinessVerifications", back_populates="business", cascade="all"
+    )
+    catalog_items = relationship("CatalogItems", back_populates="business", cascade="all")
+    business_offers = relationship("Offers", back_populates="business", cascade="all")
 
-    business_reviews=relationship("Offers",back_populates="business",cascade="all")
-    verifications_requests=relationship("VerificationRequests",back_populates="business",cascade="all")
+    business_reviews = relationship("Reviews", back_populates="business", cascade="all")
+    verifications_requests = relationship(
+        "VerificationRequests", back_populates="business", cascade="all"
+    )

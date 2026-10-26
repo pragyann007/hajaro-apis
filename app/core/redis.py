@@ -4,7 +4,7 @@ from .config import settings
 
 r = redis.Redis(
     host="localhost",
-    port=6370,
+    port=6379,
     db=0
 )
 

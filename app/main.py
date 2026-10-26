@@ -1,6 +1,7 @@
 # app/main.py
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
+import app.hajaro.models  # noqa: F401 — register all ORM models with SQLAlchemy
 from app.hajaro.api.auth import router as auth_router
 from app.exceptions import PasswordMismatchException, EmailAlreadyExistsException,UserNotFoundException
 
