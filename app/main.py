@@ -3,6 +3,8 @@ from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 import app.hajaro.models  # noqa: F401 — register all ORM models with SQLAlchemy
 from app.hajaro.api.auth import router as auth_router
+from app.hajaro.api.public.router import public_router
+
 from app.exceptions import PasswordMismatchException, EmailAlreadyExistsException,UserNotFoundException
 
 app = FastAPI(title="Hajaro Backend API")
@@ -31,3 +33,4 @@ async def email_exists_handler(request: Request, exc: EmailAlreadyExistsExceptio
 
 # 2. Include the Auth Router
 app.include_router(auth_router)
+app.include_router(public_router)
