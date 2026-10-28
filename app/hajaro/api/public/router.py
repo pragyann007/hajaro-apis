@@ -4,6 +4,11 @@ from app.core.database import AsyncSession
 from app.hajaro.schemas.public import HomeResposne
 from sqlalchemy import select,func
 from app.hajaro.models.categories import CategoryModel
+
+from app.hajaro.services.category_service import CategoryService
+
+from app.hajaro.services.locations_service import LocationService
+
 # from app.hajaro.api.public import ""
 
 public_router = APIRouter(
@@ -13,12 +18,19 @@ public_router = APIRouter(
 
 @public_router.get("/categories")
 async def categories(db:AsyncSession=Depends(get_db)):
+    category_service =  CategoryService(db=db)
+
+    return await category_service.get()
+
+@public_router.get("/locations/")
+async def locations(city:str|None = None,db:AsyncSession=Depends(get_db)):
+    location_service = LocationService(db=db)
+
+    return await location_service.getLocalities(city=city)
     
-    categories_result = await db.execute(select(CategoryModel).where(CategoryModel.parent_id == 0 ,CategoryModel.is_active == True))
+    
+  
 
-    categories = categories_result.scalars().all()
-
-    return categories 
 
 
 
