@@ -27,6 +27,13 @@ class LocationRepository:
 
   
         return results.scalars().all()
+    
+    async def get_all_active_locations(self):
+
+        query = select(Locations).where(Locations.is_active==True)
+        result =await  self.db.execute(query)
+
+        return result.scalars().all()
 
         
 

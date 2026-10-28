@@ -22,12 +22,18 @@ async def categories(db:AsyncSession=Depends(get_db)):
 
     return await category_service.get()
 
-@public_router.get("/locations/")
+@public_router.get("/locations")
 async def locations(city:str|None = None,db:AsyncSession=Depends(get_db)):
     location_service = LocationService(db=db)
 
     return await location_service.getLocalities(city=city)
     
+@public_router.get("/location-tree")
+async def location_tree(db:AsyncSession = Depends(get_db)):
+    location_service = LocationService(db=db)
+
+    return await location_service.get_loaction_trees()
+
     
   
 

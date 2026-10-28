@@ -26,6 +26,38 @@ class LocationService:
         return [ loc.name_en for loc in locations]
     
 
+    async def get_loaction_trees(self):
+        locations =await  self.repo.get_all_active_locations()
+
+        node_map = {}
+
+        for loc in locations:
+            node_map[loc.id]={
+                "id":loc.slug,
+                "slug":loc.slug,
+                "type":loc.location_type,
+                "parent_id":loc.parent_id,
+                "name_en":loc.name_en,
+                "name_ne":loc.name_ne,
+                "status":"active" if loc.is_active else "inactive",
+                "business_count":0,
+                "children":[]
+            }
+        tree = []
+
+        for loc in locations:
+            node = node_map[loc.id]
+            if loc.parent_id is None:
+                tree.append(node)
+            else:
+                if loc.parent_id in node_map:
+                    node_map[loc.parent_id]["children"].append(node)
+
+
+        return tree
+
+
+
 
 
 
